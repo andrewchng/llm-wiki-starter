@@ -24,8 +24,18 @@ if [ -e "$TARGET" ]; then
 fi
 
 mkdir -p .claude
-ln -s ../.agents/skills "$TARGET"
-echo "✓ Created $TARGET -> ../.agents/skills"
+if ! ln -s ../.agents/skills "$TARGET" 2>/dev/null || [ ! -L "$TARGET" ]; then
+  # Symlinks unavailable (typical on Windows without Developer Mode).
+  # Fall back to a real copy of the skills.
+  rm -rf "$TARGET"
+  cp -r .agents/skills "$TARGET"
+  echo "! Symlinks not supported on this platform — copied .agents/skills -> .claude/skills instead."
+  echo "! Expect \`git status\` to show .claude/skills as modified; that's harmless and"
+  echo "! expected. To silence it locally, run:"
+  echo "!   git update-index --skip-worktree .claude/skills 2>/dev/null || true"
+else
+  echo "✓ Created $TARGET -> ../.agents/skills"
+fi
 echo ""
 echo "Verify by launching your agent in this repo and asking:"
 echo '  "What skills do you have available?"'
