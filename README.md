@@ -4,6 +4,49 @@ An empty, ready-to-fork starter kit for building a **personal LLM-powered knowle
 
 You feed sources in, an LLM agent compiles them into wiki articles, and the knowledge base compounds over time.
 
+## 🚀 Quick start: one prompt
+
+Open your coding agent in an **empty directory** and paste this. The prompt handles everything: getting your own copy of the repo, verifying the setup, initializing the wiki, and teaching you how to use it.
+
+```text
+I want to set up my personal LLM wiki using the template at
+https://github.com/andrewchng/llm-wiki-starter (the "karpathy-llm-wiki" pattern).
+
+STEP A — Get my own copy:
+- Check if the current directory already is a wiki repo (it has
+  .agents/skills/karpathy-llm-wiki). If so, skip this step.
+- Otherwise: if the `gh` CLI is available and authenticated, create my own
+  repo from the template (gh repo create llm-wiki --template
+  andrewchng/llm-wiki-starter --clone --private, ask me first about the name
+  and visibility), then work inside it.
+- If `gh` is not available: tell me to click "Use this template" on the
+  template page, wait for me to confirm, then git clone my new repo and
+  work inside it.
+
+STEP B — Verify the setup, inside the repo:
+- Check that you can see the bundled skills: karpathy-llm-wiki,
+  baoyu-youtube-transcript, and wiki-ingest-next. If you can't find them,
+  tell me how to fix it (hint: they live in .agents/skills/, and
+  .claude/skills should be a symlink there — run ./setup.sh if missing).
+
+STEP C — Initialize:
+- wiki/index.md and wiki/log.md should exist. Create them only if missing;
+  never overwrite existing content.
+
+STEP D — Teach me:
+- Give me a 60-second tour of this repo: what raw/ and wiki/ are for,
+  and what you will do on each ingest (fetch -> compile -> index -> log -> commit).
+- Teach me the 4 ways I'll use you from now on, with example prompts:
+  - Ingest a source: "Ingest this article/video into my wiki: <url>"
+  - Batch process my YouTube queue in to-transcribe-list.md: "Ingest next"
+  - Ask my own knowledge: "What do I know about <topic>?"
+  - Keep it healthy: "Lint my wiki"
+
+Then confirm everything is ready and wait for my first source.
+```
+
+That's it. Everything below is reference material — read it if you want to understand what just happened.
+
 ## How it works
 
 ```
@@ -24,82 +67,23 @@ tools/        Retrieval index over the wiki (SQLite FTS5 + embeddings)
 | git | ✅ required | clone, commit history of your wiki |
 | A coding agent | ✅ required | pi / Claude Code / etc. — writes and maintains the wiki |
 | Python 3.8+ | ✅ required | retrieval tooling (`tools/retrieval/okf.py`) |
+| `gh` CLI | optional | lets the one-prompt setup create your repo from the template automatically |
 | bun | optional | runs the YouTube transcript scripts |
 | yt-dlp | optional | fallback YouTube caption fetcher |
 | Obsidian | optional | browse/read the wiki + Web Clipper for capturing articles |
 | Ollama | optional | embeddings for smarter retrieval (`nomic-embed-text`) |
 
-## Get started
+## Day-to-day usage
 
-### 1. Get the repo
-
-Click **Use this template** on GitHub to create your own copy under your account, then:
-
-```bash
-git clone https://github.com/<you>/llm-wiki-starter.git my-wiki
-cd my-wiki
-```
-
-### 2. Open it with your coding agent
-
-Launch your agent **from inside this repo** — the bundled skills live in `.agents/skills/` and the agent picks them up automatically:
-
-- **`karpathy-llm-wiki`** — the core workflow: ingest sources → compile wiki articles → query → lint.
-- **`baoyu-youtube-transcript`** — fetch YouTube transcripts/subtitles for ingestion.
-- **`wiki-ingest-next`** — the batch loop: process the queue in `to-transcribe-list.md` one item at a time.
-
-Agent support (both layouts are wired up in this repo):
-
-- **[pi](https://github.com/badlogic/pi-mono)** — works out of the box. It reads `.agents/skills/` from the project root.
-- **Claude Code** — works out of the box too: `.claude/skills` is a symlink to `.agents/skills` (both point at the same skill files, zero duplication). If your platform doesn't preserve symlinks (e.g. Windows without developer mode), run once:
-  ```bash
-  ./setup.sh
-  ```
-- **Other agents** — any agent that can read a `SKILL.md` works; just copy or symlink `.agents/skills/` to wherever your agent looks for skills.
-
-Verify it worked by asking your agent: *"What skills do you have available?"* — it should list the three above.
-
-Verify it worked by asking your agent: *"What skills do you have available?"* — it should list the three above.
-
-### 3. Or just paste this one prompt
-
-Don't want to read the rest? Copy-paste this into your agent — it verifies your setup, initializes the wiki, and teaches you how to use everything:
-
-```text
-I'm setting up my personal LLM wiki in this repo (the karpathy-llm-wiki pattern).
-Please do the following:
-
-1. Check that you can see the bundled skills: karpathy-llm-wiki,
-   baoyu-youtube-transcript, and wiki-ingest-next. If you can't find them,
-   tell me how to fix it (hint: they live in .agents/skills/, and
-   .claude/skills should symlink there — run ./setup.sh if missing).
-
-2. Initialize the wiki scaffolding if needed: wiki/index.md and wiki/log.md
-   should exist. Never overwrite them if they already have content.
-
-3. Give me a 60-second tour of this repo: what raw/ and wiki/ are for,
-   and what you will do on each ingest (fetch -> compile -> index -> log -> commit).
-
-4. Teach me the 4 ways I'll use you from now on, with example prompts:
-   - Ingest a source: "Ingest this article/video into my wiki: <url>"
-   - Batch process my YouTube queue in to-transcribe-list.md: "Ingest next"
-   - Ask my own knowledge: "What do I know about <topic>?"
-   - Keep it healthy: "Lint my wiki"
-
-Then confirm everything is ready and wait for my first source.
-```
-
-### 4. Ingest your first source
+### Ingest your first source
 
 Just tell your agent:
 
 > "Ingest this article/video into my wiki: <url>"
 
-On the first ingest the agent initializes the wiki scaffolding (`raw/`, `wiki/index.md`, `wiki/log.md`) and then keeps everything compounding from there.
+The agent fetches it into `raw/`, compiles it into `wiki/`, updates the index and log, and commits (`docs(wiki): ingest <source>`) — so your knowledge base has full history.
 
-Each ingest produces a git commit (`docs(wiki): ingest <source>`), so your knowledge base has full history.
-
-### 3b. Ask your wiki questions
+### Ask your wiki questions
 
 Once you've ingested a few sources, the payoff:
 
@@ -109,20 +93,15 @@ Once you've ingested a few sources, the payoff:
 
 The agent searches `wiki/` (and `raw/` if needed) and answers from your compiled knowledge — with links back to the source material.
 
-### 5. (Optional) YouTube pipeline
+### (Optional) YouTube pipeline
 
-To use the YouTube-to-wiki loop, install:
-
-- [bun](https://bun.sh) — runs the transcript skill's scripts
-- [yt-dlp](https://github.com/yt-dlp/yt-dlp) — fallback caption fetcher
-
-Then maintain a queue in `to-transcribe-list.md` (pending URLs on top, done below) and say:
+Install [bun](https://bun.sh) (runs the transcript skill's scripts) and [yt-dlp](https://github.com/yt-dlp/yt-dlp) (fallback caption fetcher). Then maintain a queue in `to-transcribe-list.md` (pending URLs on top, done below) and say:
 
 > "Ingest next"
 
 The agent picks the next pending URL, transcribes it, ingests it, updates the list, and commits.
 
-### 6. (Optional) Web articles — Obsidian Web Clipper
+### (Optional) Web articles — Obsidian Web Clipper
 
 For articles, blogs, and essays, the easiest capture path is the [**Obsidian Web Clipper**](https://obsidian.md/clipper) browser extension (this is the flow Andrej Karpathy uses for his own LLM wiki):
 
@@ -140,7 +119,7 @@ The `karpathy-llm-wiki` skill picks it up from `raw/` and compiles it into `wiki
 
 Don't use Obsidian? No problem — save any page as Markdown manually (or paste the text) into `raw/<topic>/` and ingest the same way. You can also queue article URLs in `to-transcribe-list.md` alongside YouTube videos and let the agent fetch them.
 
-### 7. (Optional) Retrieval index
+### (Optional) Retrieval index
 
 ```bash
 python3 tools/retrieval/okf.py reindex   # builds wiki.db
@@ -148,6 +127,20 @@ python3 tools/retrieval/okf.py query "your question"
 ```
 
 Uses [Ollama](https://ollama.com) with `nomic-embed-text` if available; falls back to TF-IDF otherwise.
+
+## Manual setup (if you skipped the prompt)
+
+<details>
+<summary>Step-by-step without the one-prompt setup</summary>
+
+1. Click **Use this template** on GitHub to create your own copy under your account, then `git clone` it and `cd` inside.
+2. Launch your agent **from inside the repo** — skills live in `.agents/skills/` and are picked up automatically:
+   - **[pi](https://github.com/badlogic/pi-mono)** — works out of the box (reads `.agents/skills/`).
+   - **Claude Code** — works out of the box (`.claude/skills` is a symlink to `.agents/skills`). If your platform doesn't preserve symlinks (e.g. Windows without developer mode), run `./setup.sh` once.
+   - **Other agents** — any agent that can read a `SKILL.md` works; copy or symlink `.agents/skills/` to wherever your agent looks for skills.
+3. Verify by asking your agent: *"What skills do you have available?"* — it should list `karpathy-llm-wiki`, `baoyu-youtube-transcript`, and `wiki-ingest-next`.
+
+</details>
 
 ## Credits
 
