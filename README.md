@@ -12,27 +12,29 @@ Open your coding agent in an **empty directory** and paste this. The prompt hand
 I want to set up my personal LLM wiki using the template at
 https://github.com/andrewchng/llm-wiki-starter (the "karpathy-llm-wiki" pattern).
 
-STEP A — Get my own copy:
-- Check if the current directory already is a wiki repo (it has
-  .agents/skills/karpathy-llm-wiki). If so, skip this step.
-- Otherwise, pick the first path that applies:
-  1. If the `gh` CLI is available and authenticated: create my own repo
-     from the template (gh repo create llm-wiki --template
-     andrewchng/llm-wiki-starter --clone --private — confirm the name with
-     me; default to private unless I say otherwise), then work inside it.
-  2. If I have a GitHub account but no `gh`: tell me to click
-     "Use this template" on the template page, and ask me to pick a repo
-     name and tick **Private** (recommended — a wiki is personal; they can
-     make it public later if they ever want to share it), wait for me to
-     confirm, then git clone my new repo and work inside it.
-  3. If I have no GitHub account (or just want local-only): git clone the
-     template directly (https://github.com/andrewchng/llm-wiki-starter.git),
-     then run `git remote rename origin template` — everything works
-     locally, commits accumulate in my local history, and `git pull
-     template main` gets me template improvements later. If I ever create
-     a GitHub account, I can back up with `git remote add origin <my-repo-url>
-     && git push -u origin main` (private recommended).
-  Ask me which situation I'm in if it's not obvious.
+STEP A — Decide where my wiki will live:
+- First check if the current directory already is a wiki repo (it has
+  .agents/skills/karpathy-llm-wiki). If so, skip to STEP B.
+- Otherwise ask me: "Local only, or backed up to GitHub?" (Recommend GitHub
+  if I'm unsure — a wiki compounds for years and is painful to lose.)
+- If GitHub:
+  1. If the `gh` CLI is available and authenticated: offer to create my
+     repo from the template automatically (gh repo create llm-wiki
+     --template andrewchng/llm-wiki-starter --clone --private — confirm
+     the name with me; default to private unless I say otherwise).
+  2. If `gh` is missing or not authenticated: tell me to click
+     "Use this template" on the template page, ask me to pick a repo name
+     and tick **Private** (recommended — a wiki is personal; it can be
+     made public later if I ever want to share it), wait for me to
+     confirm, then git clone my new repo.
+- If local only: git clone the template directly
+  (https://github.com/andrewchng/llm-wiki-starter.git), then run
+  `git remote rename origin template`. Mention that commits accumulate in
+  my local history, `git pull template main` gets template improvements
+  later, and if I ever create a GitHub account I can back up with
+  `git remote add origin <my-repo-url> && git push -u origin main`
+  (private recommended).
+- Then work inside the repo directory from here on.
 
 STEP B — Verify the setup, inside the repo:
 - Check that you can see the bundled skills: karpathy-llm-wiki,
