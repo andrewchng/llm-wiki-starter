@@ -19,9 +19,9 @@ STEP A — Get my own copy:
   repo from the template (gh repo create llm-wiki --template
   andrewchng/llm-wiki-starter --clone --private, ask me first about the name
   and visibility), then work inside it.
-- If `gh` is not available: tell me to click "Use this template" on the
-  template page, wait for me to confirm, then git clone my new repo and
-  work inside it.
+- If `gh` is not available (or not authenticated): tell me to click
+  "Use this template" on the template page, wait for me to confirm, then
+  git clone my new repo and work inside it.
 
 STEP B — Verify the setup, inside the repo:
 - Check that you can see the bundled skills: karpathy-llm-wiki,
