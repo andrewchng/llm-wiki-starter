@@ -37,8 +37,8 @@ STEP A — Decide where my wiki will live:
 - Then work inside the repo directory from here on.
 
 STEP B — Verify the setup, inside the repo:
-- Check that you can see the bundled skills: karpathy-llm-wiki,
-  baoyu-youtube-transcript, and wiki-ingest-next. If you can't find them,
+- Check that you can see the bundled skills (karpathy-llm-wiki and
+  baoyu-youtube-transcript). If you can't find them,
   tell me how to fix it (hint: they live in .agents/skills/, and
   .claude/skills should be a symlink there — run ./setup.sh if missing).
 
@@ -51,7 +51,7 @@ STEP D — Teach me:
   and what you will do on each ingest (fetch -> compile -> index -> log -> commit).
 - Teach me the 4 ways I'll use you from now on, with example prompts:
   - Ingest a source: "Ingest this article/video into my wiki: <url>"
-  - Batch process my YouTube queue in to-transcribe-list.md: "Ingest next"
+  - Batch-ingest several sources: just give me a list of URLs in one message
   - Ask my own knowledge: "What do I know about <topic>?"
   - Keep it healthy: "Lint my wiki"
 
@@ -108,9 +108,9 @@ The agent searches `wiki/` (and `raw/` if needed) and answers from your compiled
 
 ### (Optional) YouTube pipeline
 
-Install [bun](https://bun.sh) (runs the transcript skill's scripts) and [yt-dlp](https://github.com/yt-dlp/yt-dlp) (fallback caption fetcher). Then maintain a queue in `to-transcribe-list.md` (pending URLs on top, done below) and say:
+Install [bun](https://bun.sh) (runs the transcript skill's scripts) and [yt-dlp](https://github.com/yt-dlp/yt-dlp) (fallback caption fetcher). Then just give your agent one or more video URLs:
 
-> "Ingest next"
+> "Ingest these videos into my wiki: <url1> <url2>"
 
 The agent picks the next pending URL, transcribes it, ingests it, updates the list, and commits.
 
@@ -130,7 +130,7 @@ Then just tell your agent:
 
 The `karpathy-llm-wiki` skill picks it up from `raw/` and compiles it into `wiki/` — same fetch → compile → index → log loop as everything else.
 
-Don't use Obsidian? No problem — save any page as Markdown manually (or paste the text) into `raw/<topic>/` and ingest the same way. You can also queue article URLs in `to-transcribe-list.md` alongside YouTube videos and let the agent fetch them.
+Don't use Obsidian? No problem — save any page as Markdown manually (or paste the text) into `raw/<topic>/` and ingest the same way. You can also paste article URLs directly to the agent and let it fetch them.
 
 ### (Optional) Retrieval index
 
@@ -151,7 +151,7 @@ Uses [Ollama](https://ollama.com) with `nomic-embed-text` if available; falls ba
    - **[pi](https://github.com/badlogic/pi-mono)** — works out of the box (reads `.agents/skills/`).
    - **Claude Code** — works out of the box (`.claude/skills` is a symlink to `.agents/skills`). If your platform doesn't preserve symlinks (e.g. Windows without developer mode), run `./setup.sh` once.
    - **Other agents** — any agent that can read a `SKILL.md` works; copy or symlink `.agents/skills/` to wherever your agent looks for skills.
-3. Verify by asking your agent: *"What skills do you have available?"* — it should list `karpathy-llm-wiki`, `baoyu-youtube-transcript`, and `wiki-ingest-next`.
+3. Verify by asking your agent: *"What skills do you have available?"* — it should list `karpathy-llm-wiki` and `baoyu-youtube-transcript`.
 
 </details>
 

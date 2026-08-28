@@ -1,6 +1,10 @@
 # Obsidian — ephemeral UI state (open tabs, pane layout)
 .obsidian/workspace.json
 
+# Claude Code — per-user local state (do NOT ignore .claude/skills: the
+# committed symlink is what makes the bundled skills work for Claude Code)
+.claude/settings.local.json
+
 # YouTube transcript cache (regenerable raw data)
 youtube-transcript/
 
