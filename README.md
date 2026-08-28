@@ -60,7 +60,37 @@ Agent support (both layouts are wired up in this repo):
 
 Verify it worked by asking your agent: *"What skills do you have available?"* — it should list the three above.
 
-### 3. Ingest your first source
+Verify it worked by asking your agent: *"What skills do you have available?"* — it should list the three above.
+
+### 3. Or just paste this one prompt
+
+Don't want to read the rest? Copy-paste this into your agent — it verifies your setup, initializes the wiki, and teaches you how to use everything:
+
+```text
+I'm setting up my personal LLM wiki in this repo (the karpathy-llm-wiki pattern).
+Please do the following:
+
+1. Check that you can see the bundled skills: karpathy-llm-wiki,
+   baoyu-youtube-transcript, and wiki-ingest-next. If you can't find them,
+   tell me how to fix it (hint: they live in .agents/skills/, and
+   .claude/skills should symlink there — run ./setup.sh if missing).
+
+2. Initialize the wiki scaffolding if needed: wiki/index.md and wiki/log.md
+   should exist. Never overwrite them if they already have content.
+
+3. Give me a 60-second tour of this repo: what raw/ and wiki/ are for,
+   and what you will do on each ingest (fetch -> compile -> index -> log -> commit).
+
+4. Teach me the 4 ways I'll use you from now on, with example prompts:
+   - Ingest a source: "Ingest this article/video into my wiki: <url>"
+   - Batch process my YouTube queue in to-transcribe-list.md: "Ingest next"
+   - Ask my own knowledge: "What do I know about <topic>?"
+   - Keep it healthy: "Lint my wiki"
+
+Then confirm everything is ready and wait for my first source.
+```
+
+### 4. Ingest your first source
 
 Just tell your agent:
 
@@ -80,7 +110,7 @@ Once you've ingested a few sources, the payoff:
 
 The agent searches `wiki/` (and `raw/` if needed) and answers from your compiled knowledge — with links back to the source material.
 
-### 4. (Optional) YouTube pipeline
+### 5. (Optional) YouTube pipeline
 
 To use the YouTube-to-wiki loop, install:
 
@@ -93,7 +123,7 @@ Then maintain a queue in `to-transcribe-list.md` (pending URLs on top, done belo
 
 The agent picks the next pending URL, transcribes it, ingests it, updates the list, and commits.
 
-### 5. (Optional) Web articles — Obsidian Web Clipper
+### 6. (Optional) Web articles — Obsidian Web Clipper
 
 For articles, blogs, and essays, the easiest capture path is the [**Obsidian Web Clipper**](https://obsidian.md/clipper) browser extension (this is the flow Andrej Karpathy uses for his own LLM wiki):
 
@@ -111,7 +141,7 @@ The `karpathy-llm-wiki` skill picks it up from `raw/` and compiles it into `wiki
 
 Don't use Obsidian? No problem — save any page as Markdown manually (or paste the text) into `raw/<topic>/` and ingest the same way. You can also queue article URLs in `to-transcribe-list.md` alongside YouTube videos and let the agent fetch them.
 
-### 6. (Optional) Retrieval index
+### 7. (Optional) Retrieval index
 
 ```bash
 python3 tools/retrieval/okf.py reindex   # builds wiki.db
