@@ -5,7 +5,7 @@ description: Process the next pending YouTube transcript end-to-end — pick one
 
 # Ingest Next Transcript
 
-Process ONE pending item from `to-transcribe-list.md` end-to-end, then ask if the user wants to continue to the next. This chains the existing skills: **baoyu-youtube-transcript** (fetch) → **karpathy-llm-wiki** (ingest) → **git-commit** (commit).
+Process ONE pending item from `to-transcribe-list.md` end-to-end, then ask if the user wants to continue to the next. This chains the existing skills: **baoyu-youtube-transcript** (fetch) → **karpathy-llm-wiki** (ingest) → **git commit**.
 
 ## Loop structure
 
@@ -42,13 +42,13 @@ Edit `to-transcribe-list.md`: remove the URL from `## pending` and add it under 
 
 ## Step 5 — Commit
 
-Stage and commit using conventional commits (see the git-commit skill). Scope `wiki`, type `docs`:
+Stage and commit using Conventional Commits. Scope `wiki`, type `docs`:
 
 ```
 docs(wiki): ingest <title-slug> transcript
 ```
 
-Include the raw file, the new/updated article(s), index.md, log.md, and to-transcribe-list.md in the same commit (they're one logical change). **Leave unrelated untracked files alone** (e.g. Clippings/). If the commit message contains apostrophes, write it to a temp file and use `git commit -F`.
+Include the raw file, the new/updated article(s), index.md, log.md, and to-transcribe-list.md in the same commit (they're one logical change). **Leave unrelated untracked files alone.** If the commit message contains apostrophes, write it to a temp file and use `git commit -F`.
 
 ## Step 6 — Continue?
 

@@ -31,15 +31,14 @@ tools/        Retrieval index over the wiki (SQLite FTS5 + embeddings)
 
 ## Get started
 
-### 1. Fork or clone this repo
+### 1. Get the repo
+
+Click **Use this template** on GitHub to create your own copy under your account, then:
 
 ```bash
-# fork on GitHub, then:
 git clone https://github.com/<you>/llm-wiki-starter.git my-wiki
 cd my-wiki
 ```
-
-Or use it as a template: click **Use this template** on GitHub.
 
 ### 2. Open it with your coding agent
 
