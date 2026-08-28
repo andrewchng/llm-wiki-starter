@@ -57,7 +57,23 @@ Then maintain a queue in `to-transcribe-list.md` (pending URLs on top, done belo
 
 The agent picks the next pending URL, transcribes it, ingests it, updates the list, and commits.
 
-### 5. (Optional) Retrieval index
+### 5. (Optional) Web articles — Obsidian Web Clipper
+
+For articles, blogs, and essays, the easiest capture path is the [**Obsidian Web Clipper**](https://obsidian.md/clipper) browser extension (this is the flow Andrej Karpathy uses for his own LLM wiki):
+
+1. Install the Obsidian Web Clipper in your browser (Chrome/Firefox/Safari).
+2. Point it at this vault — set the default save location to `raw/<topic>/` inside this repo (create the topic folder if it doesn't exist).
+3. On any article, hit the clipper — it saves a clean Markdown copy straight into `raw/`.
+
+Then just tell your agent:
+
+> "Ingest the latest raw article into my wiki"
+
+The `karpathy-llm-wiki` skill picks it up from `raw/` and compiles it into `wiki/` — same fetch → compile → index → log loop as everything else.
+
+Don't use Obsidian? No problem — save any page as Markdown manually (or paste the text) into `raw/<topic>/` and ingest the same way. You can also queue article URLs in `to-transcribe-list.md` alongside YouTube videos and let the agent fetch them.
+
+### 6. (Optional) Retrieval index
 
 ```bash
 python3 tools/retrieval/okf.py reindex   # builds wiki.db
