@@ -18,16 +18,19 @@ STEP A — Get my own copy:
 - Otherwise, pick the first path that applies:
   1. If the `gh` CLI is available and authenticated: create my own repo
      from the template (gh repo create llm-wiki --template
-     andrewchng/llm-wiki-starter --clone --private, ask me first about the
-     name and visibility), then work inside it.
+     andrewchng/llm-wiki-starter --clone --private — confirm the name with
+     me; default to private unless I say otherwise), then work inside it.
   2. If I have a GitHub account but no `gh`: tell me to click
-     "Use this template" on the template page, wait for me to confirm,
-     then git clone my new repo and work inside it.
+     "Use this template" on the template page, and ask me to pick a repo
+     name and tick **Private** (recommended — a wiki is personal; they can
+     make it public later if they ever want to share it), wait for me to
+     confirm, then git clone my new repo and work inside it.
   3. If I have no GitHub account: git clone the template directly
      (https://github.com/andrewchng/llm-wiki-starter.git) and work inside
      it. Mention that everything works locally, commits accumulate in my
      local history, and once I create a GitHub account I can add a remote
-     (git remote add origin <my-repo-url> && git push) to back it up.
+     (git remote add origin <my-repo-url> && git push, private recommended)
+     to back it up.
   Ask me which situation I'm in if it's not obvious.
 
 STEP B — Verify the setup, inside the repo:
