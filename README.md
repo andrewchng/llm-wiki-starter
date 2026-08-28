@@ -25,12 +25,13 @@ STEP A — Get my own copy:
      name and tick **Private** (recommended — a wiki is personal; they can
      make it public later if they ever want to share it), wait for me to
      confirm, then git clone my new repo and work inside it.
-  3. If I have no GitHub account: git clone the template directly
-     (https://github.com/andrewchng/llm-wiki-starter.git) and work inside
-     it. Mention that everything works locally, commits accumulate in my
-     local history, and once I create a GitHub account I can add a remote
-     (git remote add origin <my-repo-url> && git push, private recommended)
-     to back it up.
+  3. If I have no GitHub account (or just want local-only): git clone the
+     template directly (https://github.com/andrewchng/llm-wiki-starter.git),
+     then run `git remote rename origin template` — everything works
+     locally, commits accumulate in my local history, and `git pull
+     template main` gets me template improvements later. If I ever create
+     a GitHub account, I can back up with `git remote add origin <my-repo-url>
+     && git push -u origin main` (private recommended).
   Ask me which situation I'm in if it's not obvious.
 
 STEP B — Verify the setup, inside the repo:
