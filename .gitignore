@@ -1,0 +1,16 @@
+# Obsidian — ephemeral UI state (open tabs, pane layout)
+.obsidian/workspace.json
+
+# YouTube transcript cache (regenerable raw data)
+youtube-transcript/
+
+# OKF retrieval build artifacts (regenerable via tools/retrieval/okf.py reindex)
+wiki.db
+wiki.db-*
+
+# Python bytecode and cache files
+__pycache__/
+*.py[cod]
+
+# OS noise
+.DS_Store
