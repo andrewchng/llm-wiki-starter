@@ -49,12 +49,12 @@ Launch your agent **from inside this repo** — the bundled skills live in `.age
 - **`baoyu-youtube-transcript`** — fetch YouTube transcripts/subtitles for ingestion.
 - **`wiki-ingest-next`** — the batch loop: process the queue in `to-transcribe-list.md` one item at a time.
 
-Agent support:
+Agent support (both layouts are wired up in this repo):
 
 - **[pi](https://github.com/badlogic/pi-mono)** — works out of the box. It reads `.agents/skills/` from the project root.
-- **Claude Code** — it reads skills from `.claude/skills/`, so link them first:
+- **Claude Code** — works out of the box too: `.claude/skills` is a symlink to `.agents/skills` (both point at the same skill files, zero duplication). If your platform doesn't preserve symlinks (e.g. Windows without developer mode), run once:
   ```bash
-  mkdir -p .claude && ln -s ../.agents/skills .claude/skills
+  ./setup.sh
   ```
 - **Other agents** — any agent that can read a `SKILL.md` works; just copy or symlink `.agents/skills/` to wherever your agent looks for skills.
 
